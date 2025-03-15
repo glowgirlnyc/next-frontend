@@ -49,11 +49,7 @@ export interface SalonData {
       duration: number;
     }>;
   }>;
-  amenities?: Array<{
-    id: string;
-    name: string;
-    enabled: boolean;
-  }>;
+  amenities?: string[];
   notifications?: {
     smsEnabled: boolean;
     emailEnabled: boolean;

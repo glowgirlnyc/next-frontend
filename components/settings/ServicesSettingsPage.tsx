@@ -6,23 +6,23 @@ import { AdminLayout } from "@/components/settings/AdminLayout"
 import { ServicesCard } from "@/components/settings/ServicesCard"
 import { Button } from "@/components/ui/button"
 import { Clock } from "lucide-react"
+import { SalonProvider } from "@/components/settings/SalonProvider"
 
-export function ServicesSettingsPage({ username }: { username: string }) {
+function ServicesSettingsPageContent({ username }: { username: string }) {
   const [isSaving, setIsSaving] = useState(false)
   const [lastSaved, setLastSaved] = useState<Date | null>(null)
 
   const handleSaveAll = async () => {
     setIsSaving(true)
-
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-
-    setIsSaving(false)
-    setLastSaved(new Date())
-
-    toast("Services saved", {
-      description: "Your salon services have been updated successfully.",
-    })
+    try {
+      // TODO: Implement actual save all functionality if needed
+      setLastSaved(new Date())
+      toast("Services saved", {
+        description: "Your salon services have been updated successfully.",
+      })
+    } finally {
+      setIsSaving(false)
+    }
   }
 
   return (
@@ -48,6 +48,14 @@ export function ServicesSettingsPage({ username }: { username: string }) {
         </div>
       </div>
     </AdminLayout>
+  )
+}
+
+export function ServicesSettingsPage({ username }: { username: string }) {
+  return (
+    <SalonProvider username={username}>
+      <ServicesSettingsPageContent username={username} />
+    </SalonProvider>
   )
 }
 

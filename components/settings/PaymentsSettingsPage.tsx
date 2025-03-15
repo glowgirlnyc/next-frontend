@@ -6,23 +6,23 @@ import { AdminLayout } from "@/components/settings/AdminLayout"
 import { PaymentIntegrationCard } from "@/components/settings/PaymentIntegrationCard"
 import { Button } from "@/components/ui/button"
 import { Clock } from "lucide-react"
+import { SalonProvider } from "@/components/settings/SalonProvider"
 
-export function PaymentsSettingsPage({ username }: { username: string }) {
+function PaymentsSettingsPageContent({ username }: { username: string }) {
   const [isSaving, setIsSaving] = useState(false)
   const [lastSaved, setLastSaved] = useState<Date | null>(null)
 
   const handleSaveAll = async () => {
     setIsSaving(true)
-
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-
-    setIsSaving(false)
-    setLastSaved(new Date())
-
-    toast("Payment settings saved", {
-      description: "Your payment integration settings have been updated successfully.",
-    })
+    try {
+      // TODO: Implement actual save all functionality if needed
+      setLastSaved(new Date())
+      toast("Payment settings saved", {
+        description: "Your payment integration settings have been updated successfully.",
+      })
+    } finally {
+      setIsSaving(false)
+    }
   }
 
   return (
@@ -48,6 +48,14 @@ export function PaymentsSettingsPage({ username }: { username: string }) {
         </div>
       </div>
     </AdminLayout>
+  )
+}
+
+export function PaymentsSettingsPage({ username }: { username: string }) {
+  return (
+    <SalonProvider username={username}>
+      <PaymentsSettingsPageContent username={username} />
+    </SalonProvider>
   )
 }
 

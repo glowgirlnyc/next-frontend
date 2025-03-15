@@ -19,27 +19,13 @@ const amenitiesList = [
   { id: "online-booking", label: "Online Booking", description: "Customers can book appointments online" },
 ]
 
-// Transform amenities data to string array
-const transformAmenities = (data: any): string[] => {
-  if (!data) return []
-  if (Array.isArray(data)) {
-    if (data.length === 0) return []
-    if (typeof data[0] === 'string') return data
-    // If array of objects, extract enabled amenities
-    return data
-      .filter((item: any) => item.enabled)
-      .map((item: any) => item.id)
-  }
-  return []
-}
-
 export function AmenitiesCard() {
   const { salonData, updateSalonField } = useSalon()
   const [isSaving, setIsSaving] = useState(false)
   const [isDirty, setIsDirty] = useState(false)
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>(() => {
     const defaultAmenities = ["wifi", "credit-cards", "online-booking"]
-    return transformAmenities(salonData?.amenities) || defaultAmenities
+    return salonData?.amenities || defaultAmenities
   })
 
   if (!salonData) {
@@ -48,10 +34,13 @@ export function AmenitiesCard() {
 
   const handleSave = async () => {
     setIsSaving(true)
+
     try {
-      const currentAmenities = transformAmenities(salonData.amenities)
+      const currentAmenities = salonData.amenities;
+
       if (JSON.stringify(currentAmenities) !== JSON.stringify(selectedAmenities)) {
         await updateSalonField('amenities', selectedAmenities)
+        
         toast.success("Amenities saved", {
           description: "Your salon amenities have been updated successfully."
         })

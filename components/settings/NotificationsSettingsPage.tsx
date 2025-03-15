@@ -6,23 +6,23 @@ import { AdminLayout } from "@/components/settings/AdminLayout"
 import { NotificationsCard } from "@/components/settings/NotificationsCard"
 import { Button } from "@/components/ui/button"
 import { Clock } from "lucide-react"
+import { SalonProvider } from "@/components/settings/SalonProvider"
 
-export function NotificationsSettingsPage({ username }: { username: string }) {
+function NotificationsSettingsPageContent({ username }: { username: string }) {
   const [isSaving, setIsSaving] = useState(false)
   const [lastSaved, setLastSaved] = useState<Date | null>(null)
 
   const handleSaveAll = async () => {
     setIsSaving(true)
-
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-
-    setIsSaving(false)
-    setLastSaved(new Date())
-
-    toast("Notification settings saved", {
-      description: "Your notification settings have been updated successfully.",
-    })
+    try {
+      // TODO: Implement actual save all functionality if needed
+      setLastSaved(new Date())
+      toast("Notification settings saved", {
+        description: "Your notification settings have been updated successfully.",
+      })
+    } finally {
+      setIsSaving(false)
+    }
   }
 
   return (
@@ -48,6 +48,14 @@ export function NotificationsSettingsPage({ username }: { username: string }) {
         </div>
       </div>
     </AdminLayout>
+  )
+}
+
+export function NotificationsSettingsPage({ username }: { username: string }) {
+  return (
+    <SalonProvider username={username}>
+      <NotificationsSettingsPageContent username={username} />
+    </SalonProvider>
   )
 }
 
