@@ -1,7 +1,10 @@
-import type { NextConfig } from "next";
+/** @type {import('next').NextConfig} */
 
-const nextConfig: NextConfig = {
-  /* config options here */
+const nextConfig = {
+  reactStrictMode: true,
+  images: {
+    domains: ['glowbuckets.s3.us-east-1.amazonaws.com'],
+  },
 };
 
-export default nextConfig;
+module.exports = nextConfig;

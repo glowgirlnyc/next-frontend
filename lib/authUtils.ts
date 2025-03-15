@@ -25,8 +25,7 @@ export async function handleGoogleSignIn(router: NextRouter, setErrorMessage: (m
       },
     });
 
-    console.log(response.data.message);
-    router.push('/logged-in'); // Redirect to the logged-in page
+    router.push('/logged-in'); 
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       setErrorMessage(error.response.data.message);

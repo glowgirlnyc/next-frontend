@@ -47,7 +47,6 @@ export function SignUpForm() {
         },
       });
 
-      console.log("Signup successful:", userCredential.user);
       router.push('/logged-in'); // Redirect to the logged-in page
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
